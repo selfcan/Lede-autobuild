@@ -30,27 +30,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-          target: [Lede]
+       target: [Lede]
 
-    steps:    
-    - name: 准备结束
-      uses: actions/checkout@v4
-
-    - name: 检测密匙/文件/版本
-      uses: 281677160/common@mishi
-
+    steps:
     - name: 释放Ubuntu磁盘空间
-      uses: endersonmenezes/free-disk-space@v2
+      uses: danshui-git/free-disk-space@main
       with:
         remove_android: true
         remove_dotnet: true
         remove_haskell: true
         remove_tool_cache: true
         remove_swap: true
+        remove_docker: true
         remove_packages: "azure-cli google-cloud-cli microsoft-edge-stable google-chrome-stable firefox postgresql* temurin-* *llvm* mysql* dotnet-sdk-*"
         remove_packages_one_command: true
         remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
         testing: false
+        
+    - name: 准备结束
+      uses: actions/checkout@v4
+
+    - name: 检测密匙/文件/版本
+      uses: 281677160/common@mishi
         
     - name: 部署编译环境
       env:
@@ -119,21 +120,4 @@ jobs:
         
     - name: 上传,发布,信息通知
       if: steps.compile.outcome == 'success'
-      uses: ncipollo/release-action@v1
-      with:
-        name: ${{ env.SOURCE }}-${{ env.Tongzhi_Date }}
-        tag: a${{ env.date }}
-        token: ${{ secrets.REPO_TOKEN }}
-        allowUpdates: true
-        body: |
-          ### 📒 固件信息
-          - 💄 LUCI版本：${{ env.LUCI_EDITION }}
-          - 🚀 内核版本：${{ env.LINUX_KERNEL }}
-          - 💻 平台架构：${{ env.TARGET_PROFILE }}
-          - 🌻 源码作者：${{ env.SOURCE_OWNER }}
-          - 💝 源码分支：${{ env.REPO_BRANCH }}
-          - 🌐 默认地址：192.168.23.254
-          - 🔑 默认密码：空
-          - 🔴 固件大小：Kernel=32MB，rootfs=968MB
-          - 🧊 编译时间：${{ env.Firmware_Date }}         
-        artifacts: "${{ env.FIRMWARE_PATH }}/*"
+      uses: 281677160/common@uploads
