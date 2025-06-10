@@ -121,7 +121,7 @@ jobs:
       if: steps.compile.outcome == 'success'
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.SOURCE }}-${{ env.GUJIAN_DATE }}
+        name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}
         tag: ${{ env.SOURCE }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
