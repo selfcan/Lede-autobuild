@@ -484,6 +484,7 @@ CONFIG_PACKAGE_strongswan-minimal=y
 CONFIG_PACKAGE_strongswan-mod-aes=y
 CONFIG_PACKAGE_strongswan-mod-gmp=y
 CONFIG_PACKAGE_strongswan-mod-hmac=y
+CONFIG_PACKAGE_strongswan-mod-kdf=y
 CONFIG_PACKAGE_strongswan-mod-kernel-libipsec=y
 CONFIG_PACKAGE_strongswan-mod-kernel-netlink=y
 CONFIG_PACKAGE_strongswan-mod-nonce=y
